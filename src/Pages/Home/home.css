@@ -10,6 +10,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 200px;
 }
 
 label {
@@ -20,4 +21,31 @@ label {
 
 .address {
     margin-top: 10px;
+}
+
+.departement-dropdown {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(118, 118, 118);
+}
+
+.departement-dropdown__container {
+    position: absolute;
+    width: 207px;
+    background-color: #ffffff;
+    box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+}
+
+.departement-dropdown__option {
+    padding-left: 4px;
+    cursor: default;
+}
+
+.departement-dropdown__option:hover {
+    background-color: #3498DB;
+    color: #ffffff
+}
+
+.padding-4 {
+    padding: 4px;
 }

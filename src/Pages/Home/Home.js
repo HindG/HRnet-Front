@@ -1,8 +1,34 @@
-import { Fragment } from "react"
+import { Fragment, useState, useRef, useEffect } from "react"
 import "./home.css"
 // import { NpmModale } from "modale-hind08"
 
 function Home() {
+    const [displayDepartmentDropdown, setDisplayDepartmentDropdown] = useState(false);
+    const [selectedDepartment, setSelectedDepartment] = useState("Select Departement")
+    const ref = useRef()
+
+    function handleDepartmentDropdown() {
+        setDisplayDepartmentDropdown(!displayDepartmentDropdown)
+    }
+
+    useEffect(() => {
+        const checkIfClickedOutside = e => {
+            if (displayDepartmentDropdown && ref.current && !ref.current.contains(e.target)) {
+                setDisplayDepartmentDropdown(false)
+            }
+        }
+        document.addEventListener("mousedown", checkIfClickedOutside)
+
+        return () => {
+            document.removeEventListener("mousedown", checkIfClickedOutside)
+        }
+    }, [displayDepartmentDropdown])
+
+    function handleOptionClick(value) {
+       setSelectedDepartment(value)
+       setDisplayDepartmentDropdown(false)
+
+    }
 
     return (
         <Fragment>
@@ -42,6 +68,18 @@ function Home() {
                         <input id="zip-code" type="number" />
                     </fieldset>
                     <label htmlFor="department">Department</label>
+                    <div ref={ref}>
+                        <div className="departement-dropdown padding-4" onClick={handleDepartmentDropdown}>{selectedDepartment}</div>
+                        {displayDepartmentDropdown &&
+                            <div className="departement-dropdown__container departement-dropdown">
+                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Sales")}>Sales</div>
+                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Marketing")}>Marketing</div>
+                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Engineering")}>Engineering</div>
+                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Human Resources")}>Human Resources</div>
+                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Legal")}>Legal</div>
+                            </div>
+                        }
+                    </div>
                     <select name="department" id="department">
                         <option>Sales</option>
                         <option>Marketing</option>
