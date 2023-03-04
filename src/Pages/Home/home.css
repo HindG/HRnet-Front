@@ -27,13 +27,26 @@ label {
     border-width: 1px;
     border-style: solid;
     border-color: rgb(118, 118, 118);
+    position: relative;
+    width: 167px;
+    cursor: default;
+}
+
+.departement-dropdown-img {
+    right: 10px;
+    width: 12px;
+    height: 12px;
+    top: 8px;
+    position: absolute;
 }
 
 .departement-dropdown__container {
     position: absolute;
-    width: 207px;
+    width: 175px;
     background-color: #ffffff;
     box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+    max-height: 118px;
+    overflow: auto;
 }
 
 .departement-dropdown__option {

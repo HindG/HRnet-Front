@@ -1,21 +1,44 @@
 import { Fragment, useState, useRef, useEffect } from "react"
 import "./home.css"
 import { Modale } from "modale-hind08"
+import DropDown from "./Components/DropDown"
 
 function Home() {
     const [displayDepartmentDropdown, setDisplayDepartmentDropdown] = useState(false)
+    const [displayStateDropdown, setDisplayStateDropdown] = useState(false)
     const [displayModal, setdisplayModal] = useState(false)
     const [selectedDepartment, setSelectedDepartment] = useState("Select Departement")
-    const ref = useRef()
+    const [selectedState, setSelectedState] = useState("Select State")
+    const departmentList = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"]
+    const stateList =
+        ["Alabama", "Alaska", "Arizona", "Arkansas", "California",
+            "North Carolina", "South Carolina", "Colorado", "Connecticut", "North Dakota",
+            "South Dakota", "Delaware", "Florida", "Georgia", "Hawaii",
+            "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",
+            "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts",
+            "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana",
+            "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
+            "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
+            "Rhode Island", "Tennessee", "Texas", "Utah", "Vermont",
+            "Virginia", "West Virginia", "Washington", "Wisconsin", "Wyoming"]
+    const stateRef = useRef()
+    const departmentRef = useRef()
 
     function handleDepartmentDropdown() {
         setDisplayDepartmentDropdown(!displayDepartmentDropdown)
     }
 
+    function handleStateDropDown() {
+        setDisplayStateDropdown(!displayStateDropdown)
+    }
+
     useEffect(() => {
         const checkIfClickedOutside = e => {
-            if (displayDepartmentDropdown && ref.current && !ref.current.contains(e.target)) {
+            if (displayDepartmentDropdown && stateRef.current && !stateRef.current.contains(e.target)) {
                 setDisplayDepartmentDropdown(false)
+            }
+            if (displayStateDropdown && departmentRef.current && !departmentRef.current.contains(e.target)) {
+                setDisplayStateDropdown(false)
             }
         }
         document.addEventListener("mousedown", checkIfClickedOutside)
@@ -23,14 +46,18 @@ function Home() {
         return () => {
             document.removeEventListener("mousedown", checkIfClickedOutside)
         }
-    }, [displayDepartmentDropdown])
+    }, [displayDepartmentDropdown, displayStateDropdown])
 
-    function handleOptionClick(value) {
+
+    function handleDepartmentOptionClick(value) {
         setSelectedDepartment(value)
         setDisplayDepartmentDropdown(false)
     }
 
-    console.log(displayModal);
+    function handleStateOptionClick(value) {
+        setSelectedState(value)
+        setDisplayStateDropdown(false)
+    }
 
     return (
         <Fragment>
@@ -63,31 +90,27 @@ function Home() {
                         <input id="city" type="text" />
 
                         <label htmlFor="state">State</label>
-                        <select name="state" id="state"></select>
+                        <DropDown
+                            handleOptionClick={handleStateOptionClick}
+                            selectList={stateList}
+                            displayDropdown={displayStateDropdown}
+                            label={selectedState}
+                            handleDropdown={handleStateDropDown}
+                            reference={stateRef}
+                        />
 
                         <label htmlFor="zip-code">Zip Code</label>
                         <input id="zip-code" type="number" />
                     </fieldset>
                     <label htmlFor="department">Department</label>
-                    <div ref={ref}>
-                        <div className="departement-dropdown padding-4" onClick={handleDepartmentDropdown}>{selectedDepartment}</div>
-                        {displayDepartmentDropdown &&
-                            <div className="departement-dropdown__container departement-dropdown">
-                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Sales")}>Sales</div>
-                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Marketing")}>Marketing</div>
-                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Engineering")}>Engineering</div>
-                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Human Resources")}>Human Resources</div>
-                                <div className="departement-dropdown__option" onClick={() => handleOptionClick("Legal")}>Legal</div>
-                            </div>
-                        }
-                    </div>
-                    <select name="department" id="department">
-                        <option>Sales</option>
-                        <option>Marketing</option>
-                        <option>Engineering</option>
-                        <option>Human Resources</option>
-                        <option>Legal</option>
-                    </select>
+                    <DropDown
+                        handleOptionClick={handleDepartmentOptionClick}
+                        selectList={departmentList}
+                        displayDropdown={displayDepartmentDropdown}
+                        label={selectedDepartment}
+                        handleDropdown={handleDepartmentDropdown}
+                        reference={departmentRef}
+                    />
                 </form>
 
                 <button onClick={() => setdisplayModal(true)}>Save</button>
