@@ -1,9 +1,10 @@
 import { Fragment, useState, useRef, useEffect } from "react"
 import "./home.css"
-// import { NpmModale } from "modale-hind08"
+import { Modale } from "modale-hind08"
 
 function Home() {
-    const [displayDepartmentDropdown, setDisplayDepartmentDropdown] = useState(false);
+    const [displayDepartmentDropdown, setDisplayDepartmentDropdown] = useState(false)
+    const [displayModal, setdisplayModal] = useState(false)
     const [selectedDepartment, setSelectedDepartment] = useState("Select Departement")
     const ref = useRef()
 
@@ -25,17 +26,17 @@ function Home() {
     }, [displayDepartmentDropdown])
 
     function handleOptionClick(value) {
-       setSelectedDepartment(value)
-       setDisplayDepartmentDropdown(false)
-
+        setSelectedDepartment(value)
+        setDisplayDepartmentDropdown(false)
     }
+
+    console.log(displayModal);
 
     return (
         <Fragment>
             <div className="title">
                 <h1>HRnet</h1>
             </div>
-            <div className="container"></div>
             <div className="container">
                 View Current Employees
                 <h2>Create Employee</h2>
@@ -89,9 +90,9 @@ function Home() {
                     </select>
                 </form>
 
-                <button>Save</button>
+                <button onClick={() => setdisplayModal(true)}>Save</button>
             </div>
-            {/* <NpmModale /> */}
+            {displayModal && <Modale closeModal={() => setdisplayModal(false)} />}
         </Fragment>
     )
 }
