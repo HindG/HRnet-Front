@@ -4,14 +4,17 @@ import { Modale } from "modale-hind08"
 import DropDown from "./Components/DropDown/DropDown"
 import stateList from "../../Constants/stateList.constant"
 import departmentList from "../../Constants/departmentList"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function Home() {
     const [displayDepartmentDropdown, setDisplayDepartmentDropdown] = useState(false)
     const [displayStateDropdown, setDisplayStateDropdown] = useState(false)
     const [displaySaveModal, setDisplaySaveModal] = useState(false)
-    const [displayCalendarModal, setDisplayCalendarModal] = useState(false)
     const [selectedDepartment, setSelectedDepartment] = useState("Select Departement")
     const [selectedState, setSelectedState] = useState("Select State")
+    const [birthtDate, setBirthDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date());
     const refState = useRef()
     const refDep = useRef()
 
@@ -69,12 +72,15 @@ function Home() {
                     <input type="text" id="last-name" />
 
                     <label htmlFor="date-of-birth">Date of Birth</label>
-                    <input id="date-of-birth" type="text" />
+                    <DatePicker
+                        selected={birthtDate}
+                        onChange={(date) => setBirthDate(date)} />
 
                     <div className="position-relative">
                         <label htmlFor="start-date">Start Date</label>
-                        <input id="start-date" type="text" onClick={() => setDisplayCalendarModal(!displayCalendarModal)} />
-                        {displayCalendarModal && <div />}
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)} />
                     </div>
 
                     <fieldset className="address">
