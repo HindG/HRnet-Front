@@ -3,9 +3,10 @@ import "./home.css"
 import { Modale } from "modale-hind08"
 import DropDown from "./Components/DropDown/DropDown"
 import stateList from "../../Constants/stateList.constant"
-import departmentList from "../../Constants/departmentList"
+import departmentList from "../../Constants/departmentList.constant"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Link } from "react-router-dom"
 
 function Home() {
     const [displayDepartmentDropdown, setDisplayDepartmentDropdown] = useState(false)
@@ -13,8 +14,8 @@ function Home() {
     const [displaySaveModal, setDisplaySaveModal] = useState(false)
     const [selectedDepartment, setSelectedDepartment] = useState("Select Departement")
     const [selectedState, setSelectedState] = useState("Select State")
-    const [birthtDate, setBirthDate] = useState(new Date());
-    const [startDate, setStartDate] = useState(new Date());
+    const [birthtDate, setBirthDate] = useState();
+    const [startDate, setStartDate] = useState();
     const refState = useRef()
     const refDep = useRef()
 
@@ -62,7 +63,7 @@ function Home() {
                 <h1>HRnet</h1>
             </div>
             <div className="container">
-                View Current Employees
+                <Link to="/employee-list">View Current Employees</Link>
                 <h2>Create Employee</h2>
                 <form action="#" id="create-employee">
                     <label htmlFor="first-name">First Name</label>
