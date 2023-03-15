@@ -1,0 +1,3 @@
+const departmentList = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"]
+
+export default departmentList

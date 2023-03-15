@@ -1,13 +1,13 @@
-import arrowUp from "./arrow-up.png"
-import arrowDown from "./arrow-down.png"
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 function DropDown(props) {
 
     return (
         <div ref={props.reference}>
             <div className="departement-dropdown padding-4" onClick={props.handleDropdown}>{props.label}
-                {props.displayDropdown && <img src={arrowUp} alt="" className="departement-dropdown-img" />}
-                {!props.displayDropdown && <img src={arrowDown} alt="" className="departement-dropdown-img" />}
+                {props.displayDropdown && <ArrowDropUpIcon className="departement-dropdown-img" />}
+                {!props.displayDropdown && <ArrowDropDownIcon className="departement-dropdown-img" />}
             </div>
             {props.displayDropdown &&
                 <div className="departement-dropdown__container departement-dropdown">

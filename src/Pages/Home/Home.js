@@ -1,44 +1,38 @@
 import { Fragment, useState, useRef, useEffect } from "react"
 import "./home.css"
 import { Modale } from "modale-hind08"
-import DropDown from "./Components/DropDown"
+import DropDown from "./Components/DropDown/DropDown"
+import stateList from "../../Constants/stateList.constant"
+import departmentList from "../../Constants/departmentList"
 
 function Home() {
     const [displayDepartmentDropdown, setDisplayDepartmentDropdown] = useState(false)
     const [displayStateDropdown, setDisplayStateDropdown] = useState(false)
-    const [displayModal, setdisplayModal] = useState(false)
+    const [displaySaveModal, setDisplaySaveModal] = useState(false)
+    const [displayCalendarModal, setDisplayCalendarModal] = useState(false)
     const [selectedDepartment, setSelectedDepartment] = useState("Select Departement")
     const [selectedState, setSelectedState] = useState("Select State")
-    const departmentList = ["Sales", "Marketing", "Engineering", "Human Resources", "Legal"]
-    const stateList =
-        ["Alabama", "Alaska", "Arizona", "Arkansas", "California",
-            "North Carolina", "South Carolina", "Colorado", "Connecticut", "North Dakota",
-            "South Dakota", "Delaware", "Florida", "Georgia", "Hawaii",
-            "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",
-            "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts",
-            "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana",
-            "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico",
-            "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania",
-            "Rhode Island", "Tennessee", "Texas", "Utah", "Vermont",
-            "Virginia", "West Virginia", "Washington", "Wisconsin", "Wyoming"]
-    const stateRef = useRef()
-    const departmentRef = useRef()
+    const refState = useRef()
+    const refDep = useRef()
 
     function handleDepartmentDropdown() {
         setDisplayDepartmentDropdown(!displayDepartmentDropdown)
+        setDisplayStateDropdown(false)
     }
 
     function handleStateDropDown() {
         setDisplayStateDropdown(!displayStateDropdown)
+        setDisplayDepartmentDropdown(false)
     }
 
     useEffect(() => {
         const checkIfClickedOutside = e => {
-            if (displayDepartmentDropdown && stateRef.current && !stateRef.current.contains(e.target)) {
-                setDisplayDepartmentDropdown(false)
-            }
-            if (displayStateDropdown && departmentRef.current && !departmentRef.current.contains(e.target)) {
+            if (refState.current && !refState.current.contains(e.target)) {
                 setDisplayStateDropdown(false)
+            }
+
+            if (refDep.current && !refDep.current.contains(e.target)) {
+                setDisplayDepartmentDropdown(false)
             }
         }
         document.addEventListener("mousedown", checkIfClickedOutside)
@@ -46,7 +40,7 @@ function Home() {
         return () => {
             document.removeEventListener("mousedown", checkIfClickedOutside)
         }
-    }, [displayDepartmentDropdown, displayStateDropdown])
+    })
 
 
     function handleDepartmentOptionClick(value) {
@@ -77,8 +71,11 @@ function Home() {
                     <label htmlFor="date-of-birth">Date of Birth</label>
                     <input id="date-of-birth" type="text" />
 
-                    <label htmlFor="start-date">Start Date</label>
-                    <input id="start-date" type="text" />
+                    <div className="position-relative">
+                        <label htmlFor="start-date">Start Date</label>
+                        <input id="start-date" type="text" onClick={() => setDisplayCalendarModal(!displayCalendarModal)} />
+                        {displayCalendarModal && <div />}
+                    </div>
 
                     <fieldset className="address">
                         <legend>Address</legend>
@@ -96,7 +93,7 @@ function Home() {
                             displayDropdown={displayStateDropdown}
                             label={selectedState}
                             handleDropdown={handleStateDropDown}
-                            reference={stateRef}
+                            reference={refState}
                         />
 
                         <label htmlFor="zip-code">Zip Code</label>
@@ -109,13 +106,13 @@ function Home() {
                         displayDropdown={displayDepartmentDropdown}
                         label={selectedDepartment}
                         handleDropdown={handleDepartmentDropdown}
-                        reference={departmentRef}
+                        reference={refDep}
                     />
                 </form>
 
-                <button onClick={() => setdisplayModal(true)}>Save</button>
+                <button onClick={() => setDisplaySaveModal(true)}>Save</button>
             </div>
-            {displayModal && <Modale closeModal={() => setdisplayModal(false)} />}
+            {displaySaveModal && <Modale closeModal={() => setDisplaySaveModal(false)} />}
         </Fragment>
     )
 }
