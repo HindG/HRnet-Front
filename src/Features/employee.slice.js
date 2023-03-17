@@ -8,7 +8,7 @@ const employeeSlice = createSlice({
   name: 'employee',
   initialState,
   reducers: {
-    create: (state, action) => ({
+    create: (state, action) => void({
       ...state,
       employeesList: state.employeesList.push(
         {
