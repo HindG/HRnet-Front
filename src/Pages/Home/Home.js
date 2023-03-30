@@ -67,15 +67,15 @@ function Home() {
 
     function handleSave() {
         const user = [
-            lastName,
             firstName,
-            birthDate,
-            startDate,
+            lastName,
+            startDate.toLocaleDateString('en-us'),
+            selectedDepartment !== "Select Departement" ? selectedDepartment : "",
+            birthDate.toLocaleDateString('en-us'),
             street,
             city,
             selectedState !== "Select State" ? selectedState : "",
             zipCode,
-            selectedDepartment !== "Select Departement" ? selectedDepartment : "",
         ]
         dispatch(userActions.create(user))
         setDisplaySaveModal(true)

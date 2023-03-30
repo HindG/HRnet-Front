@@ -1,5 +1,39 @@
+table {
+    border-collapse: collapse;
+}
+
+tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+tr:hover {
+    background-color: #f6f6f6;
+}
+
+.table-header {
+    background-color: #ffffff !important;
+}
+
+.table-header:hover {
+    background-color: #ffffff;
+}
+
 .searchbar-container {
     display: flex;
     justify-content: space-between;
     width: calc(100% - 270px);
+}
+
+.th-employees {
+    padding: 10px 18px;
+    border-bottom: 1px solid #111;
+}
+
+.td-employees {
+    padding: 8px 10px;
+    border-top: 1px solid #ddd;
 }
