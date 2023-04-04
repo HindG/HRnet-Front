@@ -4,24 +4,75 @@ import { Link } from "react-router-dom";
 import tableHeader from "../../Constants/tableHeader.constant"
 import { useSelector } from 'react-redux'
 import { useState } from "react"
+import produce from "immer";
 
 function EmployeeList() {
     const employeeArray = useSelector(state => state.employee.employeesList)
     const [filteredArray, setFilteredArray] = useState(employeeArray)
-
+    const [sortedTableHeader, setSortedTableHeader] = useState(tableHeader)
 
     function filterArray(searchValue) {
         let filteredArray = employeeArray.filter(element => {
             const vals = Object.keys(element).map(key => element[key])
             const filterProperties = vals.filter(element => element?.toLowerCase().includes(searchValue?.toLowerCase()))
-            
+
             return filterProperties.length > 0
-            
         })
 
         setFilteredArray(filteredArray)
 
     }
+
+    function handleSort(index, value) {
+        if (sortedTableHeader[index].sort === "none") {
+            setSortedTableHeader(produce((draft) => { draft.forEach(element => element.sort = "none") }))
+            setSortedTableHeader(produce((draft) => { draft[index].sort = "asc" }))
+
+            setFilteredArray(produce((draft) => {
+                if (value === "startDate" || value === "birthDate") {
+                    draft.sort(function (a, b) {
+                        if (new Date(a[value]) > new Date(b[value])) return 1;
+                        if (new Date(a[value]) < new Date(b[value])) return -1;
+                        return 0;
+                    });
+                }
+                else {
+                    draft.sort(function (a, b) {
+                        if (a[value] > b[value]) return 1;
+                        if (a[value] < b[value]) return -1;
+                        return 0;
+                    });
+                }
+            }))
+        }
+        if (sortedTableHeader[index].sort === "asc") {
+            setSortedTableHeader(produce((draft) => { draft.forEach(element => element.sort = "none") }))
+            setSortedTableHeader(produce((draft) => { draft[index].sort = "desc" }))
+
+            setFilteredArray(produce((draft) => {
+                if (value === "startDate" || value === "birthDate") {
+                    draft.sort(function (a, b) {
+                        if (new Date(a[value]) < new Date(b[value])) return 1;
+                        if (new Date(a[value]) > new Date(b[value])) return -1;
+                        return 0;
+                    });
+                }
+                else {
+                    draft.sort(function (a, b) {
+                        if (a[value] < b[value]) return 1;
+                        if (a[value] > b[value]) return -1;
+                        return 0;
+                    });
+                }
+            }))
+        }
+        if (sortedTableHeader[index].sort === "desc") {
+            setSortedTableHeader(produce((draft) => { draft[index].sort = "none" }))
+
+            setFilteredArray(employeeArray)
+        }
+    }
+
 
     return (
         <div id="employee-div" className="container">
@@ -47,9 +98,17 @@ function EmployeeList() {
                 <table>
                     <thead>
                         <tr className="table-header">
-                            {tableHeader.map((column, i) => {
+                            {sortedTableHeader.map((column, i) => {
                                 return (
-                                    <th key={`thead-th-${i}`} className="sorting th-employees" tabIndex="0" aria-controls="employee-table" rowSpan="1" colSpan="1" width={84}>{column}</th>
+                                    <th
+                                        key={`thead-th-${i}`}
+                                        className={`sorting th-employees ${column.sort === "none" ? "sorting-both" : ""} ${column.sort === "asc" ? "sorting-asc" : ""} ${column.sort === "desc" ? "sorting-desc" : ""}`}
+                                        tabIndex="0" aria-controls="employee-table"
+                                        rowSpan="1"
+                                        colSpan="1"
+                                        width={84}
+                                        onClick={() => handleSort(i, column.value)}>{column.label}
+                                    </th>
                                 )
                             })}
                         </tr>

@@ -37,3 +37,21 @@ tr:hover {
     padding: 8px 10px;
     border-top: 1px solid #ddd;
 }
+
+.sorting {
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+.sorting-both {
+    background-image: url(../../img/sort_both.png);
+}
+
+.sorting-asc {
+    background-image: url(../../img/sort_asc.png);
+}
+
+.sorting-desc {
+    background-image: url(../../img/sort_desc.png);
+}

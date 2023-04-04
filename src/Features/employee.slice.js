@@ -20,7 +20,7 @@ const employeeSlice = createSlice({
           streetAddress: action.payload[5],
           cityAddress: action.payload[6],
           stateAddress: action.payload[7],
-          zipCodeAddresse: action.payload[8],
+          zipCodeAddress: action.payload[8],
         })
     }),
   },
