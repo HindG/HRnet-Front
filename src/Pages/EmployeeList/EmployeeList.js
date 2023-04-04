@@ -3,9 +3,25 @@ import "../Home/home.css"
 import { Link } from "react-router-dom";
 import tableHeader from "../../Constants/tableHeader.constant"
 import { useSelector } from 'react-redux'
+import { useState } from "react"
 
 function EmployeeList() {
     const employeeArray = useSelector(state => state.employee.employeesList)
+    const [filteredArray, setFilteredArray] = useState(employeeArray)
+
+
+    function filterArray(searchValue) {
+        let filteredArray = employeeArray.filter(element => {
+            const vals = Object.keys(element).map(key => element[key])
+            const filterProperties = vals.filter(element => element?.toLowerCase().includes(searchValue?.toLowerCase()))
+            
+            return filterProperties.length > 0
+            
+        })
+
+        setFilteredArray(filteredArray)
+
+    }
 
     return (
         <div id="employee-div" className="container">
@@ -23,14 +39,14 @@ function EmployeeList() {
                 </div>
                 <div id="employee-table_filter" className="dataTables_filter">
                     <label>Search:
-                        <input type="search" placeholder="" aria-controls="employee-table" />
+                        <input type="search" placeholder="" aria-controls="employee-table" onChange={e => filterArray(e.target.value)} />
                     </label>
                 </div>
             </div>
             <div>
                 <table>
                     <thead>
-                        <tr class="table-header">
+                        <tr className="table-header">
                             {tableHeader.map((column, i) => {
                                 return (
                                     <th key={`thead-th-${i}`} className="sorting th-employees" tabIndex="0" aria-controls="employee-table" rowSpan="1" colSpan="1" width={84}>{column}</th>
@@ -38,14 +54,14 @@ function EmployeeList() {
                             })}
                         </tr>
                     </thead>
-                    {employeeArray?.length > 0 &&
+                    {filteredArray?.length > 0 &&
                         <tbody>
-                            {employeeArray.map((employee, i) => {
+                            {filteredArray.map((employee, i) => {
                                 return (
                                     <tr key={`employee-row-${i}`}>
                                         {Object.keys(employee).map((key, j) => {
                                             return (
-                                                <td colSpan="1" width={100} key={`employee-cell-${i}-${j}`} class="td-employees">
+                                                <td colSpan="1" width={100} key={`employee-cell-${i}-${j}`} className="td-employees">
                                                     {employee[key]}
                                                 </td>
                                             )

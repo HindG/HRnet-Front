@@ -69,9 +69,9 @@ function Home() {
         const user = [
             firstName,
             lastName,
-            startDate.toLocaleDateString('en-us'),
+            startDate ? startDate.toLocaleDateString('en-us') : null,
             selectedDepartment !== "Select Departement" ? selectedDepartment : "",
-            birthDate.toLocaleDateString('en-us'),
+            birthDate ? birthDate.toLocaleDateString('en-us') : null,
             street,
             city,
             selectedState !== "Select State" ? selectedState : "",
