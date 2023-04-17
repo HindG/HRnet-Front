@@ -3,13 +3,18 @@ import "../Home/home.css"
 import { Link } from "react-router-dom";
 import tableHeader from "../../Constants/tableHeader.constant"
 import { useSelector } from 'react-redux'
-import { useState } from "react"
+import { useState, useRef } from "react"
 import produce from "immer";
+import DropDown from "../Home/Components/DropDown/DropDown";
+import entryNumberConstant from "../../Constants/entryNumber.constant";
 
 function EmployeeList() {
     const employeeArray = useSelector(state => state.employee.employeesList)
     const [filteredArray, setFilteredArray] = useState(employeeArray)
     const [sortedTableHeader, setSortedTableHeader] = useState(tableHeader)
+    const [entryNumber, seEntryNumber] = useState(10)
+    const [displayDropdown, setDisplayDropdown] = useState(false)
+    const ref = useRef()
 
     function filterArray(searchValue) {
         let filteredArray = employeeArray.filter(element => {
@@ -73,20 +78,33 @@ function EmployeeList() {
         }
     }
 
+    function handleEntryNumberClick(value) {
+        seEntryNumber(value)
+        setDisplayDropdown(!displayDropdown)
+    }
+
+    function handleDropDown() {
+        setDisplayDropdown(!displayDropdown)
+    }
+
 
     return (
         <div id="employee-div" className="container">
             <h1>Current Employees</h1>
             <div className="searchbar-container">
                 <div className="dataTables_length" id="employee-table_length">
-                    <label>Show
-                        <select name="employee-table_length" aria-controls="employee-table">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select> entries
-                    </label>
+                    <div>Show
+                        <div>
+                            <DropDown
+                                handleOptionClick={handleEntryNumberClick}
+                                selectList={entryNumberConstant}
+                                displayDropdown={displayDropdown}
+                                label={entryNumber}
+                                handleDropdown={handleDropDown}
+                                reference={ref}
+                            />
+                        </div> entries
+                    </div>
                 </div>
                 <div id="employee-table_filter" className="dataTables_filter">
                     <label>Search:
