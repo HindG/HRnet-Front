@@ -6,13 +6,14 @@ import { useSelector } from 'react-redux'
 import { useState, useRef } from "react"
 import produce from "immer";
 import DropDown from "../Home/Components/DropDown/DropDown";
-import entryNumberConstant from "../../Constants/entryNumber.constant";
+import pageSizeConstant from "../../Constants/pageSize.constant";
 
 function EmployeeList() {
     const employeeArray = useSelector(state => state.employee.employeesList)
     const [filteredArray, setFilteredArray] = useState(employeeArray)
     const [sortedTableHeader, setSortedTableHeader] = useState(tableHeader)
-    const [entryNumber, seEntryNumber] = useState(10)
+    const [pageSize, sepageSize] = useState(10)
+    const [pageNumber, sePageNumber] = useState(1)
     const [displayDropdown, setDisplayDropdown] = useState(false)
     const ref = useRef()
 
@@ -78,8 +79,8 @@ function EmployeeList() {
         }
     }
 
-    function handleEntryNumberClick(value) {
-        seEntryNumber(value)
+    function handlepageSizeClick(value) {
+        sepageSize(value)
         setDisplayDropdown(!displayDropdown)
     }
 
@@ -96,10 +97,10 @@ function EmployeeList() {
                     <div>Show
                         <div>
                             <DropDown
-                                handleOptionClick={handleEntryNumberClick}
-                                selectList={entryNumberConstant}
+                                handleOptionClick={handlepageSizeClick}
+                                selectList={pageSizeConstant}
                                 displayDropdown={displayDropdown}
-                                label={entryNumber}
+                                label={pageSize}
                                 handleDropdown={handleDropDown}
                                 reference={ref}
                             />
@@ -116,40 +117,49 @@ function EmployeeList() {
                 <table>
                     <thead>
                         <tr className="table-header">
-                            {sortedTableHeader.map((column, i) => {
-                                return (
-                                    <th
-                                        key={`thead-th-${i}`}
-                                        className={`sorting th-employees ${column.sort === "none" ? "sorting-both" : ""} ${column.sort === "asc" ? "sorting-asc" : ""} ${column.sort === "desc" ? "sorting-desc" : ""}`}
-                                        tabIndex="0" aria-controls="employee-table"
-                                        rowSpan="1"
-                                        colSpan="1"
-                                        width={84}
-                                        onClick={() => handleSort(i, column.value)}>{column.label}
-                                    </th>
-                                )
-                            })}
+                            {sortedTableHeader
+                                .map((column, i) => {
+                                    return (
+                                        <th
+                                            key={`thead-th-${i}`}
+                                            className={`sorting th-employees ${column.sort === "none" ? "sorting-both" : ""} ${column.sort === "asc" ? "sorting-asc" : ""} ${column.sort === "desc" ? "sorting-desc" : ""}`}
+                                            tabIndex="0" aria-controls="employee-table"
+                                            rowSpan="1"
+                                            colSpan="1"
+                                            width={84}
+                                            onClick={() => handleSort(i, column.value)}>{column.label}
+                                        </th>
+                                    )
+                                })}
                         </tr>
                     </thead>
                     {filteredArray?.length > 0 &&
                         <tbody>
-                            {filteredArray.map((employee, i) => {
-                                return (
-                                    <tr key={`employee-row-${i}`}>
-                                        {Object.keys(employee).map((key, j) => {
-                                            return (
-                                                <td colSpan="1" width={100} key={`employee-cell-${i}-${j}`} className="td-employees">
-                                                    {employee[key]}
-                                                </td>
-                                            )
-                                        })}
-                                    </tr>
-                                )
-                            })}
+                            {filteredArray
+                                .slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
+                                .map((employee, i) => {
+                                    return (
+                                        <tr key={`employee-row-${i}`}>
+                                            {Object.keys(employee).map((key, j) => {
+                                                return (
+                                                    <td colSpan="1" width={100} key={`employee-cell-${i}-${j}`} className="td-employees">
+                                                        {employee[key]}
+                                                    </td>
+                                                )
+                                            })}
+                                        </tr>
+                                    )
+                                })}
                         </tbody>
                     }
                 </table>
-
+                <div>
+                    <div>Showing {(pageNumber - 1) * pageSize + 1} to {pageSize < employeeArray.length ? pageSize : employeeArray.length} of {employeeArray.length} entries</div>
+                    <div className="dataTables_paginate paging_simple_numbers" id="employee-table_paginate">
+                        <div className="paginate_button previous disabled">Previous</div>
+                        <div className="paginate_button previous disabled">Next</div>
+                    </div>
+                </div>
             </div>
             <Link to="/">Home</Link>
         </div>
