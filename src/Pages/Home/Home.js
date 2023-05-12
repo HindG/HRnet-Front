@@ -14,6 +14,7 @@ function Home() {
     const [displayDepartmentDropdown, setDisplayDepartmentDropdown] = useState(false)
     const [displayStateDropdown, setDisplayStateDropdown] = useState(false)
     const [displaySaveModal, setDisplaySaveModal] = useState(false)
+    const [displayErrorModal, setDisplayErrorModal] = useState(false)
     const [selectedDepartment, setSelectedDepartment] = useState("Select Departement")
     const [selectedState, setSelectedState] = useState("Select State")
     const [firstName, setFirstName] = useState("");
@@ -66,19 +67,33 @@ function Home() {
     }
 
     function handleSave() {
-        const user = [
-            firstName,
-            lastName,
-            startDate ? startDate.toLocaleDateString('en-us') : null,
-            selectedDepartment !== "Select Departement" ? selectedDepartment : "",
-            birthDate ? birthDate.toLocaleDateString('en-us') : null,
-            street,
-            city,
-            selectedState !== "Select State" ? selectedState : "",
-            zipCode,
-        ]
-        dispatch(userActions.create(user))
-        setDisplaySaveModal(true)
+        if (firstName === "" || lastName === "") {
+            setDisplayErrorModal(true)
+        }
+        else {
+            const user = [
+                firstName,
+                lastName,
+                startDate ? startDate.toLocaleDateString('en-us') : null,
+                selectedDepartment !== "Select Departement" ? selectedDepartment : "",
+                birthDate ? birthDate.toLocaleDateString('en-us') : null,
+                street,
+                city,
+                selectedState !== "Select State" ? selectedState : "",
+                zipCode,
+            ]
+            dispatch(userActions.create(user))
+            setSelectedDepartment("Select Departement")
+            setSelectedState("Select State")
+            setFirstName("")
+            setLastName("")
+            setStreet("")
+            setCity("")
+            setZipCode("")
+            setBirthDate()
+            setStartDate()
+            setDisplaySaveModal(true)
+        }
     }
 
     return (
@@ -91,10 +106,10 @@ function Home() {
                 <h2>Create Employee</h2>
                 <form action="#" id="create-employee">
                     <label htmlFor="first-name">First Name</label>
-                    <input type="text" id="first-name" onChange={e => setFirstName(e.target.value)} />
+                    <input type="text" id="first-name" onChange={e => setFirstName(e.target.value)} value={firstName} />
 
                     <label htmlFor="last-name">Last Name</label>
-                    <input type="text" id="last-name" onChange={e => setLastName(e.target.value)} />
+                    <input type="text" id="last-name" onChange={e => setLastName(e.target.value)} value={lastName} />
 
                     <label htmlFor="date-of-birth">Date of Birth</label>
                     <DatePicker
@@ -112,10 +127,10 @@ function Home() {
                         <legend>Address</legend>
 
                         <label htmlFor="street">Street</label>
-                        <input id="street" type="text" onChange={e => setStreet(e.target.value)} />
+                        <input id="street" type="text" onChange={e => setStreet(e.target.value)} value={street} />
 
                         <label htmlFor="city">City</label>
-                        <input id="city" type="text" onChange={e => setCity(e.target.value)} />
+                        <input id="city" type="text" onChange={e => setCity(e.target.value)} value={city} />
 
                         <label htmlFor="state">State</label>
                         <DropDown
@@ -128,7 +143,7 @@ function Home() {
                         />
 
                         <label htmlFor="zip-code">Zip Code</label>
-                        <input id="zip-code" type="number" onChange={e => setZipCode(e.target.value)} />
+                        <input id="zip-code" type="number" onChange={e => setZipCode(e.target.value)} value={zipCode} />
                     </fieldset>
                     <label htmlFor="department">Department</label>
                     <DropDown
@@ -141,9 +156,13 @@ function Home() {
                     />
                 </form>
 
-                <button onClick={() => handleSave()}>Save</button>
+                <button className="validation-btn" onClick={() => handleSave()}>Save</button>
             </div>
             {displaySaveModal && <Modale closeModal={() => setDisplaySaveModal(false)} />}
+            {displayErrorModal && <div className="error-modal">
+                <span className="error-modal-text">Firstname and lastname can't be empty</span>
+                <button className="validation-btn" onClick={() => setDisplayErrorModal(false)}>Close</button>
+            </div>}
         </Fragment>
     )
 }
