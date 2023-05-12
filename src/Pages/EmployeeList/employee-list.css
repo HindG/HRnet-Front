@@ -55,3 +55,42 @@ tr:hover {
 .sorting-desc {
     background-image: url(../../img/sort_desc.png);
 }
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.page-size-container {
+    display: flex;
+    align-items: center;
+}
+
+.number-active {
+    color: #333 !important;
+    border: 1px solid #979797;
+    background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
+}
+
+.number-not-active {
+    padding: 0.5em 1em;
+    margin-left: 2px;
+    cursor: pointer;
+}
+
+.previous {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.next {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.disabled-pagination {
+    cursor: default;
+    color: #666 !important;
+}

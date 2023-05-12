@@ -93,9 +93,17 @@ function EmployeeList() {
     function getPageNumbers() {
         let paginationArray = []
         for (let i = 1; i <= Math.ceil(filteredArray.length / pageSize); i++) {
-            paginationArray.push(<div onClick={() => sePageNumber(i)}>{i}</div>)
+            paginationArray.push(<div className={`number-not-active ${i === pageNumber ? "number-active" : ""}`} onClick={() => sePageNumber(i)}>{i}</div>)
         }
         return paginationArray
+    }
+
+    function getPreviousPage() {
+        sePageNumber(pageNumber - 1)
+    }
+
+    function getNextPage() {
+        sePageNumber(pageNumber + 1)
     }
 
 
@@ -163,12 +171,12 @@ function EmployeeList() {
                         </tbody>
                     }
                 </table>
-                <div>
-                    <div>Showing {(pageNumber - 1) * pageSize + 1} to {pageSize < employeeArray.length ? pageSize : employeeArray.length} of {employeeArray.length} entries</div>
-                    <div className="dataTables_paginate paging_simple_numbers" id="employee-table_paginate">
-                        <div className="paginate_button previous disabled">Previous</div>
+                <div className="pagination-container">
+                    <div>Showing {(pageNumber - 1) * pageSize + 1} to {pageSize < employeeArray.length ? pageNumber * pageSize < employeeArray.length ? pageNumber * pageSize : employeeArray.length : employeeArray.length} of {employeeArray.length} entries</div>
+                    <div className="dataTables_paginate paging_simple_numbers page-size-container" id="employee-table_paginate">
+                        <div className={`paginate_button previous disabled ${pageNumber < 2 ? "disabled-pagination" : ""}`} onClick={pageNumber > 1 ? getPreviousPage : null}>Previous</div>
                         {getPageNumbers()}
-                        <div className="paginate_button previous disabled">Next</div>
+                        <div className={`paginate_button next disabled ${pageNumber === Math.ceil(filteredArray.length / pageSize) ? "disabled-pagination" : ""}`} onClick={pageNumber < Math.ceil(filteredArray.length / pageSize) ? getNextPage : null}>Next</div>
                     </div>
                 </div>
             </div>
