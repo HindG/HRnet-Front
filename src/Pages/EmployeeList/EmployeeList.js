@@ -20,8 +20,9 @@ function EmployeeList() {
 
     function filterArray(searchValue) {
         let filteredArray = employeeArray.filter(element => {
-            const vals = Object.keys(element).map(key => element[key])
-            const filterProperties = vals.filter(element => element?.toLowerCase().includes(searchValue?.toLowerCase()))
+            const vals = []
+            Object.keys(element).forEach(key => vals.push(element[key]))
+            const filterProperties = vals.filter(element => element?.toLocaleLowerCase().includes(searchValue?.toLocaleLowerCase()))
 
             return filterProperties.length > 0
         })
@@ -45,8 +46,8 @@ function EmployeeList() {
                 }
                 else {
                     draft.sort(function (a, b) {
-                        if (a[value] > b[value]) return 1;
-                        if (a[value] < b[value]) return -1;
+                        if (a[value].toLocaleLowerCase() > b[value].toLocaleLowerCase()) return 1;
+                        if (a[value].toLocaleLowerCase() < b[value].toLocaleLowerCase()) return -1;
                         return 0;
                     });
                 }
@@ -66,8 +67,8 @@ function EmployeeList() {
                 }
                 else {
                     draft.sort(function (a, b) {
-                        if (a[value] < b[value]) return 1;
-                        if (a[value] > b[value]) return -1;
+                        if (a[value].toLocaleLowerCase() < b[value].toLocaleLowerCase()) return 1;
+                        if (a[value].toLocaleLowerCase() > b[value].toLocaleLowerCase()) return -1;
                         return 0;
                     });
                 }
