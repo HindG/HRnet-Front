@@ -79,7 +79,7 @@ function EmployeeList() {
         if (sortedTableHeader[index].sort === "desc") {
             setSortedTableHeader(produce((draft) => { draft[index].sort = "none" }))
 
-            setFilteredArray(employeeArray)
+            setFilteredArray(filteredArray)
         }
         sePageNumber(1)
     }
@@ -114,10 +114,10 @@ function EmployeeList() {
         if (filteredArray.length === 0) {
             return 0
         }
-        if (pageSize < employeeArray.length && pageNumber * pageSize < employeeArray.length) {
+        if (pageSize < filteredArray.length && pageNumber * pageSize < filteredArray.length) {
             return pageNumber * pageSize
         }
-        return employeeArray.length
+        return filteredArray.length
     }
 
     function getPaginationFrom() {
@@ -131,7 +131,7 @@ function EmployeeList() {
         if (filteredArray.length === 0) {
             return 0
         }
-        return employeeArray.length
+        return filteredArray.length
     }
 
 
