@@ -1,10 +1,11 @@
 import EmptyStateLottie from "./empty-state.json"
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import "./emptystate.css"
 
 function EmptyState() {
 
     return (
-        <div>
+        <div className="empystate_container">
             <div>There currently is no registered employee</div>
             <Player
                 autoplay
