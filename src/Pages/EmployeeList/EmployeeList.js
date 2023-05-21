@@ -1,6 +1,5 @@
 import "./employee-list.css"
 import "../Home/home.css"
-import { Link } from "react-router-dom";
 import tableHeader from "../../Constants/tableHeader.constant"
 import { useSelector } from 'react-redux'
 import { useState, useRef, Fragment } from "react"
@@ -22,7 +21,9 @@ function EmployeeList() {
     function filterArray(searchValue) {
         let filteredArray = employeeArray.filter(element => {
             const vals = []
-            Object.keys(element).forEach(key => vals.push(element[key]))
+            Object.keys(element).forEach(key => {
+                vals.push(element[key])
+            })
             const filterProperties = vals.filter(element => element?.toLocaleLowerCase().includes(searchValue?.toLocaleLowerCase()))
 
             return filterProperties.length > 0
@@ -109,6 +110,30 @@ function EmployeeList() {
         sePageNumber(pageNumber + 1)
     }
 
+    function getPaginationTo() {
+        if (filteredArray.length === 0) {
+            return 0
+        }
+        if (pageSize < employeeArray.length && pageNumber * pageSize < employeeArray.length) {
+            return pageNumber * pageSize
+        }
+        return employeeArray.length
+    }
+
+    function getPaginationFrom() {
+        if (filteredArray.length === 0) {
+            return 0
+        }
+        return (pageNumber - 1) * pageSize + 1
+    }
+
+    function getEntriesNumber() {
+        if (filteredArray.length === 0) {
+            return 0
+        }
+        return employeeArray.length
+    }
+
 
     return (
         <Fragment>
@@ -122,7 +147,7 @@ function EmployeeList() {
                     <>
                         <div className="searchbar-container">
                             <div className="dataTables_length" id="employee-table_length">
-                                <div>Show
+                                <div className="pagesize-container">Show
                                     <div>
                                         <DropDown
                                             handleOptionClick={handlepageSizeClick}
@@ -131,15 +156,13 @@ function EmployeeList() {
                                             label={pageSize}
                                             handleDropdown={handleDropDown}
                                             reference={ref}
+                                            containerClassName="pagesize-dropdown__container"
+                                            labelClassName="pagesize-dropdown"
                                         />
                                     </div> entries
                                 </div>
                             </div>
-                            <div id="employee-table_filter" className="dataTables_filter">
-                                <label>Search:
-                                    <input type="search" placeholder="" aria-controls="employee-table" onChange={e => filterArray(e.target.value)} />
-                                </label>
-                            </div>
+                            <input type="search" placeholder="Search" className="searchbar" aria-controls="employee-table" onChange={e => filterArray(e.target.value)} />
                         </div>
                         <div>
                             <table>
@@ -149,7 +172,7 @@ function EmployeeList() {
                                             .map((column, i) => {
                                                 return (
                                                     <th
-                                                        key={`thead-th-${i}`}
+                                                        key={`thead-th-${column.label}-${i}`}
                                                         className={`sorting th-employees ${column.sort === "none" ? "sorting-both" : ""} ${column.sort === "asc" ? "sorting-asc" : ""} ${column.sort === "desc" ? "sorting-desc" : ""}`}
                                                         tabIndex="0" aria-controls="employee-table"
                                                         rowSpan="1"
@@ -182,7 +205,7 @@ function EmployeeList() {
                                 }
                             </table>
                             <div className="pagination-container">
-                                <div>Showing {(pageNumber - 1) * pageSize + 1} to {pageSize < employeeArray.length ? pageNumber * pageSize < employeeArray.length ? pageNumber * pageSize : employeeArray.length : employeeArray.length} of {employeeArray.length} entries</div>
+                                <div>Showing {getPaginationFrom()} to {getPaginationTo()} of {getEntriesNumber()} entries</div>
                                 <div className="dataTables_paginate paging_simple_numbers page-size-container" id="employee-table_paginate">
                                     <div className={`paginate_button previous disabled ${pageNumber < 2 ? "disabled-pagination" : ""}`} onClick={pageNumber > 1 ? getPreviousPage : null}>Previous</div>
                                     {getPageNumbers()}
@@ -192,7 +215,6 @@ function EmployeeList() {
                         </div>
                     </>
                 }
-                <Link to="/">Home</Link>
             </div>
         </Fragment>
     )

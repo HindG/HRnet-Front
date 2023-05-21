@@ -14,13 +14,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-bottom: 165px;
-}
-
-label {
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 10px;
+    padding-bottom: 200px;
 }
 
 .address {
@@ -43,10 +37,11 @@ label {
     background-color: #fff;
     color: #757575;
     padding: 10px;
+    font-size: 13px;
 }
 
 .departement-dropdown-img {
-    top: 7px;
+    top: calc(50% - 12px);
     right: 0;
     position: absolute;
 }
@@ -59,14 +54,19 @@ label {
     max-height: 118px;
     overflow: auto;
     z-index: 99;
-    top: 150px;
+    top: 148px;
     padding: 0;
 }
 
 .departement-dropdown__container {
-    width: 398px;
-    top: 668px;
+    width: 399px;
+    top: 664px;
+}
 
+.pagesize-dropdown__container {
+    width: 55px;
+    top: 31px;
+    left: 48px;
 }
 
 .departement-dropdown__option {

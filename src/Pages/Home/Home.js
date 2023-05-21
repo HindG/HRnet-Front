@@ -114,7 +114,7 @@ function Home() {
                             setDisplayErrorMessage(false)
                         }
                         }
-                            placeHolder="First Name"
+                            placeholder="First Name"
                             value={firstName}
                             className="form-input"
                         />
@@ -123,7 +123,7 @@ function Home() {
                             setDisplayErrorMessage(false)
                         }
                         }
-                            placeHolder="Last Name"
+                            placeholder="Last Name"
                             value={lastName}
                             className="form-input"
                         />
@@ -147,7 +147,7 @@ function Home() {
                                 type="text"
                                 onChange={e => setStreet(e.target.value)}
                                 value={street}
-                                placeHolder="Street"
+                                placeholder="Street"
                                 className="form-input form-input-address"
                             />
                             <input
@@ -155,7 +155,7 @@ function Home() {
                                 type="text"
                                 onChange={e => setCity(e.target.value)}
                                 value={city}
-                                placeHolder="City"
+                                placeholder="City"
                                 className="form-input form-input-address"
                             />
                             <DropDown
@@ -165,14 +165,14 @@ function Home() {
                                 label={selectedState}
                                 handleDropdown={handleStateDropDown}
                                 reference={refState}
-                                placeHolder="State form-input-address"
+                                placeholder="State form-input-address"
                             />
                             <input
                                 id="zip-code"
                                 type="number"
                                 onChange={e => setZipCode(e.target.value)}
                                 value={zipCode}
-                                placeHolder="Zip Code"
+                                placeholder="Zip Code"
                                 className="form-input form-input-address form-input-last"
                             />
                         </fieldset>
@@ -183,7 +183,7 @@ function Home() {
                             label={selectedDepartment}
                             handleDropdown={handleDepartmentDropdown}
                             reference={refDep}
-                            isDepartement
+                            containerClassName="departement-dropdown__container"
                         />
                     </form>
                     {displayErrorMessage && <span className="error-text">Firstname and lastname can't be empty</span>}

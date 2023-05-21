@@ -3,7 +3,7 @@ table {
 }
 
 tr:nth-child(odd) {
-    background-color: #f9f9f9;
+    background-color: transparent;
 }
 
 tr:nth-child(even) {
@@ -11,7 +11,7 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-    background-color: #f6f6f6;
+    background-color: rgb(224 29 91 / 0.05);
 }
 
 .table-header {
@@ -26,6 +26,17 @@ tr:hover {
     display: flex;
     justify-content: space-between;
     width: calc(100% - 270px);
+    height: 60px;
+}
+
+.searchbar {
+    height: 30px;
+    display: block;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #757575;
+    margin-top: 15px;
 }
 
 .th-employees {
@@ -35,7 +46,7 @@ tr:hover {
 
 .td-employees {
     padding: 8px 10px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid rgb(72 28 75 / 0.04);
 }
 
 .sorting {
@@ -93,4 +104,19 @@ tr:hover {
 .disabled-pagination {
     cursor: default;
     color: #666 !important;
+}
+
+.pagesize-container {
+    display: flex;
+    position: relative;
+}
+
+.pagesize-dropdown {
+    padding: 5px 30px 5px 10px;
+    margin: 0 10px;
+}
+
+.dataTables_length {
+    display: flex;
+    align-items: center;
 }

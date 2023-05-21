@@ -5,12 +5,12 @@ function DropDown(props) {
 
     return (
         <div ref={props.reference}>
-            <div className="departement-dropdown" onClick={props.handleDropdown}>{props.label}
+            <div className={`departement-dropdown ${props.labelClassName}`} onClick={props.handleDropdown}>{props.label}
                 {props.displayDropdown && <ArrowDropUpIcon className="departement-dropdown-img" />}
                 {!props.displayDropdown && <ArrowDropDownIcon className="departement-dropdown-img" />}
             </div>
             {props.displayDropdown &&
-                <div className={`dropdown__container departement-dropdown ${props.isDepartement ? "departement-dropdown__container" : ""}`}>
+                <div className={`dropdown__container departement-dropdown ${props.containerClassName}`}>
                     {props.selectList.map((list, i) => <div key={`dropdown-${props.label}-${i}`} className="departement-dropdown__option" onClick={() => props.handleOptionClick(list)}>{list}</div>)}
                 </div>
             }
