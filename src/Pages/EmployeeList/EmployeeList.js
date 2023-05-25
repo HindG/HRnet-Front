@@ -97,7 +97,7 @@ function EmployeeList() {
     function getPageNumbers() {
         let paginationArray = []
         for (let i = 1; i <= Math.ceil(filteredArray.length / pageSize); i++) {
-            paginationArray.push(<div className={`number-not-active ${i === pageNumber ? "number-active" : ""}`} onClick={() => sePageNumber(i)}>{i}</div>)
+            paginationArray.push(<div key={i} className={`number-not-active ${i === pageNumber ? "number-active" : ""}`} onClick={() => sePageNumber(i)}>{i}</div>)
         }
         return paginationArray
     }
