@@ -5,7 +5,7 @@ import EmployeeList from "./Pages/EmployeeList/EmployeeList";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/employee-list" element={<EmployeeList />}></Route>
