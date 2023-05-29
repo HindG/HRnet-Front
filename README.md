@@ -2,12 +2,12 @@
 
 🚀 Update of the HRnet plateform, from JQuery to React 🚀
 
-This project was created to makeover the HRnet plateform, wich was obsolete and not very performant.
+This project was created to makeover the HRnet plateform, wich was obsolete and not very performant. \
 After building the project with React, the performance comparison was conclusive thanks to Lighthouse.
 
 ## Prerequisites
 
-👍 nodeJs version 12.2.0 or higher
+👍 nodeJs version 12.2.0 or higher \
 👍 npm
 
 ## Available Scripts
