@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# HRnet React App Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🚀 Update of the HRnet plateform, from JQuery to React 🚀
+
+This project was created to makeover the HRnet plateform, wich was obsolete and not very performant.
+After building the project with React, the performance comparison was conclusive thanks to Lighthouse.
+
+## Prerequisites
+
+👍 nodeJs version 12.2.0 or higher
+👍 npm
 
 ## Available Scripts
 
