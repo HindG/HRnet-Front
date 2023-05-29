@@ -47,8 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "http://hindg.github.io/HRnet-Front",
-  "devDependencies": {
-    "gh-pages": "^5.0.0"
-  }
+  "homepage": "http://hindg.github.io/HRnet-Front"
 }
