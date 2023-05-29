@@ -114,13 +114,15 @@ function Home() {
                     <label htmlFor="date-of-birth">Date of Birth</label>
                     <DatePicker
                         selected={birthDate}
-                        onChange={(date) => setBirthDate(date)} />
+                        onChange={(date) => setBirthDate(date)}
+                        id="date-of-birth" />
 
                     <div className="position-relative">
                         <label htmlFor="start-date">Start Date</label>
                         <DatePicker
                             selected={startDate}
-                            onChange={(date) => setStartDate(date)} />
+                            onChange={(date) => setStartDate(date)}
+                            id="start-date" />
                     </div>
 
                     <fieldset className="address">
